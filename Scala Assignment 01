@@ -1,15 +1,43 @@
 Some interesting things that you can try :
+
 In Scala REPL, type 3 : followed by a tab key and see what methods can be applied
+----------------------------------------------------------------------------------
+scala> 3.
+!=   +    <<   >>             byteValue     ensuring     formatted    isInfinity      isValidByte    isWhole     notify       signum           toChar        toInt           toString     until
+##   -    <=   >>>            ceil          eq           getClass     isInstanceOf    isValidChar    longValue   notifyAll    synchronized     toDegrees     toLong          unary_+      wait
+%    ->   ==   ^              compare       equals       hashCode     isNaN           isValidInt     max         round        to               toDouble      toOctalString   unary_-      |
+&    /    >    abs            compareTo     floatValue   intValue     isNegInfinity   isValidLong    min         self         toBinaryString   toFloat       toRadians       unary_~      →
+*    <    >=   asInstanceOf   doubleValue   floor        isInfinite   isPosInfinity   isValidShort   ne          shortValue   toByte           toHexString   toShort         underlying
+-----------------------------------------------------------------------------------
 
 In scala you can multiply a String with a number tell  the output.
+------------------------------------------------------------------
+scala> "girish" * 5
+res1: String = girishgirishgirishgirishgirish
+------------------------------------------------------------------
 
-Scala Docs are a good way to see what the class is doing and get the description, try to go through the documentation 
-to find out how to generate a random number and then convert it to Base36 value and try to do it.
+Scala Docs are a good way to see what the class is doing and get the description, try to go through the documentation to find out how to generate a random number and then convert it to Base36 value and try to do it.
+
+
 
 Explore String functions like , take , drop, takeRight, dropRight and find out the advantages or disadvantages of using 
 them over substring() function in String
 
+"girish".take(3)
+"girish".drop(2)
+"girish".takeRight(2)
+"girish".dropRight(2)
+"girish".substring(2)
 
+OP
+
+res0: String = gir
+res1: String = rish
+res2: String = sh
+res3: String = giri
+res4: String = rish
+
+- Substring function creates a new string and take, drop, takeRight and dropRight uses string Builder. So, memory consumption is low. 
 
 
 For all these problems try to use Val
@@ -20,18 +48,59 @@ For example:  if the list is List(10,20,30,40) output should be
 1 = 20
 2 = 30
 
+SOL:
+
+def print(list: List[Int]): Unit = {
+  list.foldLeft(0) { (i, n) =>
+    println(s"$i = $n")
+    i + 1
+  }
+}
 
 Problem 2 Write a program to find the maximum element from list.
 For example: List(1,5,2,9,7)
 Output should be 9
+
+SOL:
+def max(list: List[Int]): Int = {
+   list.foldLeft(list.headOption.getOrElse(0)) { (m, n) =>
+     if(m > n) m else n
+   }
+}
 
 Problem 3  Write  a program to get the nth Fibonacci number.
 For example: Fibonacci series (0,1,1,2,3,5,8.....)
 if n is 3 then it should return 2
 if n is 4 then it should return 3
 
+SOL:
+
+def fibonacci(n: Int): Int = {
+    def f(a: Int = 0, b: Int = 0, n: Int): Int = {
+      val c = a + b
+      val c1 = if(c == 0) 1 else a + b
+      if(n > 0) f(b, c1, n - 1) else b
+    }
+
+    f(0, 0, n)
+}
+
 Problem 4 Write a program to sum of the digits of the product of numbers from 1 to n.
 For example: For, n = 5
 1*2*3*4*5 = 120
-1+2+0 = 3 
+1+2+0 = 3
+
+
+def sumOfDig(n: Int): Int ={
+  def sum(n: Int): Int ={
+    val mod = n % 10
+    if(n > 0 ){
+      val newN = n / 10
+      mod + sum(newN)
+    } else {
+      mod
+    }
+  }
+  sum((1 to n).product)
+}
 
